@@ -1,6 +1,5 @@
-package app.donation;
+package app.donation.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.List;
+
+import app.donation.main.DonationApp;
+import app.donation.R;
+import app.donation.model.Donation;
 
 public class Report extends AppCompatActivity
 {
