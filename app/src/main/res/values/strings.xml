@@ -13,4 +13,5 @@
   <string name="defaultMethod">N/A</string>
   <string name="menuReport">Report</string>
   <string name="reportTitle">Report</string>
+  <string name="menuDonate">Donate</string>
 </resources>
