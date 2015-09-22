@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/row_amount"
         android:layout_alignBottom="@+id/row_amount"
-        android:layout_marginLeft="106dp"
-        android:layout_toRightOf="@+id/row_amount"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="79dp"
         android:text="@string/defaultMethod" />
 
 </RelativeLayout>
