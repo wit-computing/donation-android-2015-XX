@@ -15,8 +15,14 @@ public class Welcome extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_welcome);
   }
+
   public void loginPressed (View view)
   {
-   startActivity (new Intent(this, Donate.class));
+    startActivity(new Intent(this, Donate.class));
+  }
+  
+  public void signupPressed (View view)
+  {
+    startActivity (new Intent(this, Signup.class));
   }
 }

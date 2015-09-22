@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="app.donation">
+    package="app.donation" >
 
     <application
+        android:name=".DonationApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:name="app.donation.DonationApp">
+        android:theme="@style/AppTheme" >
         <activity
-            android:name="app.donation.Welcome"
+            android:name=".Welcome"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="app.donation.Donate"
+            android:name=".Donate"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="app.donation.Report"
+            android:name=".Report"
             android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".Signup"
+            android:label="@string/title_activity_signup" >
         </activity>
     </application>
 
