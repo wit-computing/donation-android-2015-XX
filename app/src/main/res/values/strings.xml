@@ -30,4 +30,5 @@
   <string name="loginSignin">Sign in</string>
   <string name="loginEmail">Email</string>
   <string name="loginPassword">Password</string>
+  <string name="menuLogout">Logout</string>
 </resources>

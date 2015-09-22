@@ -47,6 +47,8 @@ public class Report extends AppCompatActivity
     {
       case R.id.menuDonate : startActivity (new Intent(this, Donate.class));
         break;
+      case R.id.menuLogout : startActivity (new Intent(this, Welcome.class));
+        break;
     }
     return true;
   }

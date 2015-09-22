@@ -9,4 +9,8 @@
         android:orderInCategory="100"
         android:title="@string/menuDonate"/>
 
+    <item
+        android:id="@+id/menuLogout"
+        android:orderInCategory="100"
+        android:title="@string/menuLogout"/>
 </menu>
