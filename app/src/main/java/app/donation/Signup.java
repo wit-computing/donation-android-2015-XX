@@ -19,6 +19,6 @@ public class Signup extends AppCompatActivity
 
   public void registerPressed (View view)
   {
-    startActivity(new Intent(this, Donate.class));
+    startActivity(new Intent(this, Welcome.class));
   }
 }
