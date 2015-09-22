@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 public class Signup extends AppCompatActivity
 {
@@ -19,6 +20,16 @@ public class Signup extends AppCompatActivity
 
   public void registerPressed (View view)
   {
-    startActivity(new Intent(this, Welcome.class));
+    TextView firstName = (TextView)  findViewById(R.id.firstName);
+    TextView lastName  = (TextView)  findViewById(R.id.lastName);
+    TextView email     = (TextView)  findViewById(R.id.Email);
+    TextView password  = (TextView)  findViewById(R.id.Password);
+
+    User user = new User (firstName.getText().toString(), lastName.getText().toString(), email.getText().toString(), password.getText().toString());
+
+    DonationApp app = (DonationApp) getApplication();
+    app.newUser(user);
+
+    startActivity (new Intent(this, Welcome.class));
   }
 }
