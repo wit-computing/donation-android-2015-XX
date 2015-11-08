@@ -14,14 +14,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import java.util.List;
 
+import app.donation.api.GetDonations;
+import app.donation.api.Response;
 import app.donation.main.DonationApp;
 import app.donation.R;
 import app.donation.model.Donation;
 
-public class Report extends AppCompatActivity
+public class Report extends AppCompatActivity implements Response<Donation>
 {
   private ListView    listView;
   private DonationApp app;
+  private DonationAdapter adapter;
 
   @Override
   public void onCreate(Bundle savedInstanceState)
@@ -32,8 +35,10 @@ public class Report extends AppCompatActivity
     app = (DonationApp) getApplication();
 
     listView = (ListView) findViewById(R.id.reportList);
-    DonationAdapter adapter = new DonationAdapter (this, app.donations);
+    adapter = new DonationAdapter (this, app.donations);
     listView.setAdapter(adapter);
+
+    new GetDonations(app.donationServiceAPI, this, this, "Retrieving list of donations").execute();
   }
 
   @Override
@@ -54,6 +59,26 @@ public class Report extends AppCompatActivity
         break;
     }
     return true;
+  }
+
+  @Override
+  public void setResponse(List<Donation> aList)
+  {
+    app.donations     = aList;
+    adapter.donations = aList;
+    adapter.notifyDataSetChanged();
+  }
+
+  @Override
+  public void setResponse(Donation anObject)
+  {
+
+  }
+
+  @Override
+  public void errorOccurred(Exception e)
+  {
+
   }
 }
 
