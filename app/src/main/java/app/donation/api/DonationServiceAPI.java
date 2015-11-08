@@ -42,4 +42,12 @@ public class DonationServiceAPI
     donations = call.execute();
     return donations.body();
   }
+
+  public User createUser(User newUser) throws Exception
+  {
+    Call<User> call = (Call<User>) service.createUser(newUser);
+    retrofit.Response<User> returnedUser = null;
+    returnedUser = call.execute();
+    return returnedUser.body();
+  }
 }
