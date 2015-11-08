@@ -13,6 +13,8 @@ import app.donation.model.User;
 
 public class DonationApp extends Application
 {
+  public boolean         donationServiceAvailable = false;
+
   public final int       target       = 10000;
   public int             totalDonated = 0;
   public List <User>      users       = new ArrayList<User>();
