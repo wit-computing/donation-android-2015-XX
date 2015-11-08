@@ -7,6 +7,7 @@ import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
+import app.donation.api.DonationServiceAPI;
 import app.donation.model.Donation;
 import app.donation.model.User;
 
@@ -16,6 +17,8 @@ public class DonationApp extends Application
   public int             totalDonated = 0;
   public List <User>      users       = new ArrayList<User>();
   public List <Donation> donations    = new ArrayList<Donation>();
+
+  public DonationServiceAPI donationServiceAPI;
 
   public boolean newDonation(Donation donation)
   {
@@ -54,6 +57,7 @@ public class DonationApp extends Application
   public void onCreate()
   {
     super.onCreate();
+    donationServiceAPI = new DonationServiceAPI();
     Log.v("Donation", "Donation App Started");
   }
 }
