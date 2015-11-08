@@ -12,12 +12,17 @@ import android.widget.RadioGroup;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.List;
+
+import app.donation.api.CreateDonation;
+import app.donation.api.Response;
 import app.donation.model.Donation;
 import app.donation.main.DonationApp;
 import app.donation.R;
 
-public class Donate extends AppCompatActivity
+public class Donate extends AppCompatActivity implements Response<Donation>
 {
   private Button       donateButton;
   private RadioGroup   paymentMethod;
@@ -76,10 +81,7 @@ public class Donate extends AppCompatActivity
     }
     if (donatedAmount > 0)
     {
-      app.newDonation(new Donation(donatedAmount, method));
-      progressBar.setProgress(app.totalDonated);
-      String totalDonatedStr = "$" + app.totalDonated;
-      amountTotal.setText(totalDonatedStr);
+      new CreateDonation(new Donation(donatedAmount, method), app.donationServiceAPI, this, this, "Creating new Donation").execute();
     }
     amountText.setText("");
     amountPicker.setValue(0);
@@ -96,5 +98,30 @@ public class Donate extends AppCompatActivity
         break;
     }
     return true;
+  }
+
+  @Override
+  public void setResponse(List<Donation> aList)
+  {
+
+  }
+
+  @Override
+  public void setResponse(Donation acceptedDonation)
+  {
+    Toast toast = Toast.makeText(this, "Donation Accepteed", Toast.LENGTH_SHORT);
+    toast.show();
+    app.newDonation(acceptedDonation);
+    progressBar.setProgress(app.totalDonated);
+    String totalDonatedStr = "$" + app.totalDonated;
+    amountTotal.setText(totalDonatedStr);
+    amountText.setText("");
+    amountPicker.setValue(0);
+  }
+
+  @Override
+  public void errorOccurred(Exception e)
+  {
+
   }
 }
