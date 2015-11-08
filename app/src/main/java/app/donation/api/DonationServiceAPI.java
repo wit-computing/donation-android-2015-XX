@@ -50,4 +50,12 @@ public class DonationServiceAPI
     returnedUser = call.execute();
     return returnedUser.body();
   }
+
+  public Donation createDonation(Donation newDonation) throws Exception
+  {
+    Call<Donation> call = (Call<Donation>) service.createDonation(newDonation);
+    retrofit.Response<Donation> returnedDonation = null;
+    returnedDonation = call.execute();
+    return returnedDonation.body();
+  }
 }

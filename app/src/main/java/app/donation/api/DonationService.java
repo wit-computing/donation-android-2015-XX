@@ -19,4 +19,7 @@ public interface DonationService
 
   @POST("/api/users")
   Call<User> createUser(@Body User user);
+
+  @POST("/api/donations")
+  Call<Donation> createDonation(@Body Donation donation);
 }
