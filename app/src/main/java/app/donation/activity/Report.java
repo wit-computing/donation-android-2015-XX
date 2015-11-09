@@ -14,13 +14,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import java.util.List;
 
-import app.donation.api.GetDonations;
-import app.donation.api.Response;
 import app.donation.main.DonationApp;
 import app.donation.R;
 import app.donation.model.Donation;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
-public class Report extends AppCompatActivity implements Response<Donation>
+public class Report extends AppCompatActivity implements Callback<List<Donation>>
 {
   private ListView    listView;
   private DonationApp app;
@@ -38,7 +40,8 @@ public class Report extends AppCompatActivity implements Response<Donation>
     adapter = new DonationAdapter (this, app.donations);
     listView.setAdapter(adapter);
 
-    new GetDonations(app.currentUser, app.donationServiceAPI, this, this, "Retrieving list of donations").execute();
+    Call<List<Donation>> call = (Call<List<Donation>>) app.donationService.getDonations(app.currentUser.id);
+    call.enqueue(this);
   }
 
   @Override
@@ -62,23 +65,16 @@ public class Report extends AppCompatActivity implements Response<Donation>
   }
 
   @Override
-  public void setResponse(List<Donation> aList)
+  public void onResponse(Response<List<Donation>> response, Retrofit retrofit)
   {
-    app.donations     = aList;
-    adapter.donations = aList;
+    app.donations     = response.body();
+    adapter.donations = response.body();
     adapter.notifyDataSetChanged();
   }
 
   @Override
-  public void setResponse(Donation anObject)
+  public void onFailure(Throwable t)
   {
-
-  }
-
-  @Override
-  public void errorOccurred(Exception e)
-  {
-
   }
 }
 

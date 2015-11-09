@@ -1,12 +1,12 @@
 package app.donation.activity;
 
 import app.donation.R;
-import app.donation.activity.Login;
-import app.donation.activity.Signup;
-import app.donation.api.GetUsers;
-import app.donation.api.Response;
 import app.donation.main.DonationApp;
 import app.donation.model.User;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class Welcome extends AppCompatActivity implements Response<User>
+public class Welcome extends AppCompatActivity implements Callback<List<User>>
 {
   private DonationApp app;
 
@@ -27,7 +27,6 @@ public class Welcome extends AppCompatActivity implements Response<User>
     setContentView(R.layout.activity_welcome);
 
     app = (DonationApp) getApplication();
-
   }
 
   @Override
@@ -35,7 +34,8 @@ public class Welcome extends AppCompatActivity implements Response<User>
   {
     super.onResume();
     app.currentUser = null;
-    new GetUsers(app.donationServiceAPI, this, this, "Retrieving list of users").execute();
+    Call<List<User>> call = (Call<List<User>>) app.donationService.getUsers();
+    call.enqueue(this);
   }
 
   void serviceUnavailableMessage()
@@ -69,18 +69,14 @@ public class Welcome extends AppCompatActivity implements Response<User>
   }
 
   @Override
-  public void setResponse(List<User> aList)
+  public void onResponse(Response<List<User>> response, Retrofit retrofit)
   {
-    app.users = aList;
+    app.users = response.body();
     app.donationServiceAvailable = true;
   }
 
   @Override
-  public void setResponse(User anObject)
-  {}
-
-  @Override
-  public void errorOccurred(Exception e)
+  public void onFailure(Throwable t)
   {
     app.donationServiceAvailable = false;
     serviceUnavailableMessage();

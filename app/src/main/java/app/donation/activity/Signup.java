@@ -7,15 +7,15 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
 import app.donation.R;
-import app.donation.api.CreateUser;
-import app.donation.api.Response;
 import app.donation.main.DonationApp;
 import app.donation.model.User;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
-public class Signup extends AppCompatActivity implements Response<User>
+public class Signup extends AppCompatActivity implements Callback<User>
 {
   private DonationApp app;
 
@@ -37,25 +37,19 @@ public class Signup extends AppCompatActivity implements Response<User>
     User user = new User (firstName.getText().toString(), lastName.getText().toString(), email.getText().toString(), password.getText().toString());
 
     DonationApp app = (DonationApp) getApplication();
-
-    new CreateUser(user, app.donationServiceAPI, this, this, "Creating new User Account").execute();
-
-    startActivity (new Intent(this, Welcome.class));
+    Call<User> call = (Call<User>) app.donationService.createUser(user);
+    call.enqueue(this);
   }
 
   @Override
-  public void setResponse(List<User> aList)
-  {}
-
-  @Override
-  public void setResponse(User user)
+  public void onResponse(Response<User> response, Retrofit retrofit)
   {
-    app.users.add(user);
+    app.users.add(response.body());
     startActivity (new Intent(this, Welcome.class));
   }
 
   @Override
-  public void errorOccurred(Exception e)
+  public void onFailure(Throwable t)
   {
     app.donationServiceAvailable = false;
     Toast toast = Toast.makeText(this, "Donation Service Unavailable. Try again later", Toast.LENGTH_LONG);

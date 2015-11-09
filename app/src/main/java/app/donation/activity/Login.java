@@ -1,20 +1,16 @@
 package app.donation.activity;
 
-import java.util.List;
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import app.donation.R;
-import app.donation.api.GetUsers;
-import app.donation.api.Response;
-import app.donation.model.User;
 import app.donation.main.DonationApp;
+import android.support.v7.app.AppCompatActivity;
 
 
-public class Login extends Activity
+public class Login extends AppCompatActivity
 {
   @Override
   protected void onCreate(Bundle savedInstanceState)

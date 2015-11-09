@@ -14,15 +14,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
-import app.donation.api.CreateDonation;
-import app.donation.api.Response;
 import app.donation.model.Donation;
 import app.donation.main.DonationApp;
 import app.donation.R;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
-public class Donate extends AppCompatActivity implements Response<Donation>
+public class Donate extends AppCompatActivity implements Callback<Donation>
 {
   private Button       donateButton;
   private RadioGroup   paymentMethod;
@@ -81,7 +81,9 @@ public class Donate extends AppCompatActivity implements Response<Donation>
     }
     if (donatedAmount > 0)
     {
-      new CreateDonation(app.currentUser, new Donation(donatedAmount, method), app.donationServiceAPI, this, this, "Creating new Donation").execute();
+      Donation donation = new Donation(donatedAmount, method);
+      Call<Donation> call = (Call<Donation>) app.donationService.createDonation(app.currentUser.id, donation);
+      call.enqueue(this);
     }
     amountText.setText("");
     amountPicker.setValue(0);
@@ -101,17 +103,11 @@ public class Donate extends AppCompatActivity implements Response<Donation>
   }
 
   @Override
-  public void setResponse(List<Donation> aList)
-  {
-
-  }
-
-  @Override
-  public void setResponse(Donation acceptedDonation)
+  public void onResponse(Response<Donation> response, Retrofit retrofit)
   {
     Toast toast = Toast.makeText(this, "Donation Accepteed", Toast.LENGTH_SHORT);
     toast.show();
-    app.newDonation(acceptedDonation);
+    app.newDonation(response.body());
     progressBar.setProgress(app.totalDonated);
     String totalDonatedStr = "$" + app.totalDonated;
     amountTotal.setText(totalDonatedStr);
@@ -120,8 +116,7 @@ public class Donate extends AppCompatActivity implements Response<Donation>
   }
 
   @Override
-  public void errorOccurred(Exception e)
+  public void onFailure(Throwable t)
   {
-
   }
 }

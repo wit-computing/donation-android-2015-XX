@@ -7,9 +7,13 @@ import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
-import app.donation.api.DonationServiceAPI;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import app.donation.model.Donation;
 import app.donation.model.User;
+import retrofit.GsonConverterFactory;
+import retrofit.Retrofit;
 
 public class DonationApp extends Application
 {
@@ -18,10 +22,11 @@ public class DonationApp extends Application
 
   public final int       target       = 10000;
   public int             totalDonated = 0;
-  public List <User>      users       = new ArrayList<User>();
+  public List <User>     users        = new ArrayList<User>();
   public List <Donation> donations    = new ArrayList<Donation>();
 
-  public DonationServiceAPI donationServiceAPI;
+  public String          service_url  = "http://10.0.2.2:9000";
+  public DonationService donationService;
 
   public boolean newDonation(Donation donation)
   {
@@ -61,7 +66,13 @@ public class DonationApp extends Application
   public void onCreate()
   {
     super.onCreate();
-    donationServiceAPI = new DonationServiceAPI();
+    Gson gson = new GsonBuilder().create();
+
+    Retrofit retrofit = new Retrofit.Builder()
+        .baseUrl(service_url)
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .build();
+    donationService = retrofit.create(DonationService.class);
     Log.v("Donation", "Donation App Started");
   }
 }
