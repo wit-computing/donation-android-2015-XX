@@ -14,6 +14,7 @@ import app.donation.model.User;
 public class DonationApp extends Application
 {
   public boolean         donationServiceAvailable = false;
+  public User            currentUser;
 
   public final int       target       = 10000;
   public int             totalDonated = 0;
@@ -49,6 +50,7 @@ public class DonationApp extends Application
     {
       if (user.email.equals(email) && user.password.equals(password))
       {
+        currentUser = user;
         return true;
       }
     }
