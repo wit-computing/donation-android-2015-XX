@@ -27,6 +27,14 @@ public class Welcome extends AppCompatActivity implements Response<User>
     setContentView(R.layout.activity_welcome);
 
     app = (DonationApp) getApplication();
+
+  }
+
+  @Override
+  public void onResume()
+  {
+    super.onResume();
+    app.currentUser = null;
     new GetUsers(app.donationServiceAPI, this, this, "Retrieving list of users").execute();
   }
 

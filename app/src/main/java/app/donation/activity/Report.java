@@ -38,7 +38,7 @@ public class Report extends AppCompatActivity implements Response<Donation>
     adapter = new DonationAdapter (this, app.donations);
     listView.setAdapter(adapter);
 
-    new GetDonations(app.donationServiceAPI, this, this, "Retrieving list of donations").execute();
+    new GetDonations(app.currentUser, app.donationServiceAPI, this, this, "Retrieving list of donations").execute();
   }
 
   @Override

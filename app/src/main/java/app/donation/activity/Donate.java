@@ -81,7 +81,7 @@ public class Donate extends AppCompatActivity implements Response<Donation>
     }
     if (donatedAmount > 0)
     {
-      new CreateDonation(new Donation(donatedAmount, method), app.donationServiceAPI, this, this, "Creating new Donation").execute();
+      new CreateDonation(app.currentUser, new Donation(donatedAmount, method), app.donationServiceAPI, this, this, "Creating new Donation").execute();
     }
     amountText.setText("");
     amountPicker.setValue(0);
