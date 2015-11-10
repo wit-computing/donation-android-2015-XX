@@ -2,7 +2,7 @@ package app.donation.activity;
 
 import app.donation.R;
 import app.donation.main.DonationApp;
-import app.donation.model.User;
+import app.donation.model.Donor;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class Welcome extends AppCompatActivity implements Callback<List<User>>
+public class Welcome extends AppCompatActivity implements Callback<List<Donor>>
 {
   private DonationApp app;
 
@@ -34,7 +34,7 @@ public class Welcome extends AppCompatActivity implements Callback<List<User>>
   {
     super.onResume();
     app.currentUser = null;
-    Call<List<User>> call = (Call<List<User>>) app.donationService.getUsers();
+    Call<List<Donor>> call = (Call<List<Donor>>) app.donationService.getAllDonors();
     call.enqueue(this);
   }
 
@@ -69,7 +69,7 @@ public class Welcome extends AppCompatActivity implements Callback<List<User>>
   }
 
   @Override
-  public void onResponse(Response<List<User>> response, Retrofit retrofit)
+  public void onResponse(Response<List<Donor>> response, Retrofit retrofit)
   {
     app.users = response.body();
     app.donationServiceAvailable = true;

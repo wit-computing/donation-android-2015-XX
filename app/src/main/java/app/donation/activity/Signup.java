@@ -9,13 +9,13 @@ import android.widget.Toast;
 
 import app.donation.R;
 import app.donation.main.DonationApp;
-import app.donation.model.User;
+import app.donation.model.Donor;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class Signup extends AppCompatActivity implements Callback<User>
+public class Signup extends AppCompatActivity implements Callback<Donor>
 {
   private DonationApp app;
 
@@ -34,15 +34,15 @@ public class Signup extends AppCompatActivity implements Callback<User>
     TextView email     = (TextView)  findViewById(R.id.Email);
     TextView password  = (TextView)  findViewById(R.id.Password);
 
-    User user = new User (firstName.getText().toString(), lastName.getText().toString(), email.getText().toString(), password.getText().toString());
+    Donor user = new Donor(firstName.getText().toString(), lastName.getText().toString(), email.getText().toString(), password.getText().toString());
 
     DonationApp app = (DonationApp) getApplication();
-    Call<User> call = (Call<User>) app.donationService.createUser(user);
+    Call<Donor> call = (Call<Donor>) app.donationService.createDonor(user);
     call.enqueue(this);
   }
 
   @Override
-  public void onResponse(Response<User> response, Retrofit retrofit)
+  public void onResponse(Response<Donor> response, Retrofit retrofit)
   {
     app.users.add(response.body());
     startActivity (new Intent(this, Welcome.class));

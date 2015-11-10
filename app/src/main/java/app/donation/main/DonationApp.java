@@ -11,22 +11,22 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import app.donation.model.Donation;
-import app.donation.model.User;
+import app.donation.model.Donor;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 
 public class DonationApp extends Application
 {
   public boolean         donationServiceAvailable = false;
-  public User            currentUser;
+  public Donor currentUser;
 
   public final int       target       = 10000;
   public int             totalDonated = 0;
-  public List <User>     users        = new ArrayList<User>();
+  public List <Donor>     users        = new ArrayList<Donor>();
   public List <Donation> donations    = new ArrayList<Donation>();
 
   public String          service_url  = "http://10.0.2.2:9000";
-  public DonationService donationService;
+  public DonationServiceProxy donationService;
 
   public boolean newDonation(Donation donation)
   {
@@ -44,14 +44,14 @@ public class DonationApp extends Application
     return targetAchieved;
   }
 
-  public void newUser(User user)
+  public void newUser(Donor user)
   {
     users.add(user);
   }
 
   public boolean validUser (String email, String password)
   {
-    for (User user : users)
+    for (Donor user : users)
     {
       if (user.email.equals(email) && user.password.equals(password))
       {
@@ -72,7 +72,7 @@ public class DonationApp extends Application
         .baseUrl(service_url)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build();
-    donationService = retrofit.create(DonationService.class);
+    donationService = retrofit.create(DonationServiceProxy.class);
     Log.v("Donation", "Donation App Started");
   }
 }
